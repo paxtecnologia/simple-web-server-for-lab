@@ -18,10 +18,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker images
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
           TAG=${{ github.event.release.tag_name }}
           REPOSITORY_NAME=${{ github.event.repository.name }}
           BUILD_ARG=""
-          IMAGE_NAME=$(echo "${REPOSITORY_NAME}:${TAG}")
+          IMAGE_NAME=$(echo "${{ env.DOCKERHUB_USERNAME }}/${REPOSITORY_NAME}:${TAG}")
           docker build $BUILD_ARG -t $IMAGE_NAME .
           docker push $IMAGE_NAME
