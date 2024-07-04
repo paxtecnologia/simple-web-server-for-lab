@@ -20,7 +20,7 @@ jobs:
       - name: Build and push Docker images
         run: |
           TAG=${{ github.event.release.tag_name }}
-          REPOSITORY_NAME=${{ github.event.repo.name }}
+          REPOSITORY_NAME=${{ github.event.repository.name }}
           BUILD_ARG=""
           IMAGE_NAME=$(echo "${REPOSITORY_NAME}:${TAG}")
           docker build $BUILD_ARG -t $IMAGE_NAME .
